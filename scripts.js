@@ -21,7 +21,6 @@ class fetchData {
         this.show = (tagID, value) => {
             document.getElementById(tagID).querySelector('span').textContent = value
         }
-
     }
 }
 
@@ -33,7 +32,7 @@ lastTransactions.catchData(lastTransactions.url).then(response => {
     lastTransactions.show('transactions', apiData)
 })
 
-//last block
+///////LAST BLOCK
 
 let lastBlock = new fetchData()
 lastBlock.url = `https://api.etherscan.io/api?module=proxy&action=eth_blockNumber&apikey=${lastBlock.keyApi}`
@@ -43,15 +42,31 @@ lastBlock.catchData(lastBlock.url).then(response => {
     lastBlock.show("lastblock", apiData)
 })
 
-//hash rate 
-let hashRate = new fetchData()
-hashRate.url = `https://api.etherscan.io/api?module=proxy&action=eth_hashrate&apikey=${lastBlock.keyApi}`
-hashRate.catchData(hashRate.url).then(response => {
-   let apiData =response.result.slice(2)
-   console.log(apiData)
-   hashRate.show("hashRate", apiData)
+///////// HASH RATE
+// let hashRate = new fetchData()
+// hashRate.url = `https://api.etherscan.io/api?module=proxy&action=eth_hashrate&apikey=${lastBlock.keyApi}`
+// hashRate.catchData(hashRate.url).then(response => {
+//    let apiData =response.result.slice(2)
+//    console.log(apiData)
+//    hashRate.show("hashRate", apiData)
+// })
+
+//////// ETHER PRICE
+let etherPrice = new fetchData()
+etherPrice.url = `https://api.etherscan.io/api?module=stats&action=ethprice&apikey=${lastBlock.keyApi}`
+etherPrice.catchData(etherPrice.url).then(response => {
+    let apiData = response.result
+    let value = `${apiData.ethusd} @ ${apiData.ethbtc} BTC/ETH`
+    etherPrice.show("etherPrice", value)
+})
+///////// NETWORK DIFFICULTY
+
+let netDifficulty = new fetchData()
+netDifficulty.url = 'https://etherchain.org/api/basic_stats'
+netDifficulty.catchData(netDifficulty.url).then(response => {
+    let apiData = response
+    console.log(apiData)
 })
 
-//
 
 window.addEventListener('load', pageLoader())
