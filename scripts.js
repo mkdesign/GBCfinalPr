@@ -19,7 +19,28 @@ class fetchData {
         }
 
         this.show = (tagID, value) => {
-            document.getElementById(tagID).querySelector('span').textContent = value
+            
+
+            if(!(tagID== "etherPrice")){
+                var objPropLogEl = document.getElementById(tagID).querySelector('span');
+
+                var myObject = {
+
+                    prop2: '0%'
+                }
+
+                anime({
+                    targets: myObject,
+                    prop2: value,
+                    easing: 'linear',
+                    round: 1,
+                    update: function() {
+                        objPropLogEl.innerHTML = myObject.prop2
+                    }
+                });
+            }else {
+                document.getElementById(tagID).querySelector('span').textContent = value
+            }
         }
     }
 }
@@ -61,12 +82,13 @@ etherPrice.catchData(etherPrice.url).then(response => {
 })
 ///////// NETWORK DIFFICULTY
 
-let netDifficulty = new fetchData()
-netDifficulty.url = 'https://etherchain.org/api/basic_stats'
-netDifficulty.catchData(netDifficulty.url).then(response => {
-    let apiData = response
-    console.log(apiData)
-})
+// let netDifficulty = new fetchData()
+// netDifficulty.url = 'https://etherchain.org/api/basic_stats'
+// netDifficulty.catchData(netDifficulty.url).then(response => {
+//     let apiData = response
+//     console.log(apiData)
+// })
 
+var logEl = document.querySelector('.container > div > span').innerHTML;
 
 window.addEventListener('load', pageLoader())
